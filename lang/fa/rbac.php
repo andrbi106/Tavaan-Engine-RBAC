@@ -1,2 +1,2 @@
 <?php
-return return ['error_permission' => 'دسترسی مجاز نیست.'];;
+return ['error_permission' => 'دسترسی مجاز نیست.'];
