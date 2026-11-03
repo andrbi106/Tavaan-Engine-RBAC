@@ -14,77 +14,77 @@ final class Gate
     /**
      * define
      */
-    public function define(/* ... */): mixed
+    public function define()
     {
         return null;
     }
     /**
      * policy
      */
-    public function policy(/* ... */): mixed
+    public function policy()
     {
         return null;
     }
     /**
      * before
      */
-    public function before(/* ... */): mixed
+    public function before()
     {
         return null;
     }
     /**
      * after
      */
-    public function after(/* ... */): mixed
+    public function after()
     {
         return null;
     }
     /**
      * allows
      */
-    public function allows(/* ... */): mixed
+    public function allows()
     {
-        return [];
+        return null;
     }
     /**
      * denies
      */
-    public function denies(/* ... */): mixed
+    public function denies()
     {
         return null;
     }
     /**
      * check
      */
-    public function check(/* ... */): mixed
+    public function check(): bool
     {
         return $this->user !== null;
     }
     /**
      * any
      */
-    public function any(/* ... */): mixed
+    public function any()
     {
         return null;
     }
     /**
      * authorize
      */
-    public function authorize(/* ... */): mixed
+    public function authorize()
     {
         return null;
     }
     /**
      * forUser
      */
-    public function forUser(/* ... */): mixed
+    public function forUser()
     {
         return null;
     }
     /**
      * abilities
      */
-    public function abilities(/* ... */): mixed
+    public function abilities()
     {
         return null;
     }

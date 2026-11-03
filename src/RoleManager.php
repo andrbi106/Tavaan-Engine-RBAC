@@ -14,36 +14,36 @@ final class RoleManager
     /**
      * create
      */
-    public function create(/* ... */): mixed
+    public function create(array $data): self
     {
-        return $this;
+        return null;
     }
     /**
      * assign
      */
-    public function assign(/* ... */): mixed
+    public function assign()
     {
-        return $this;
+        return null;
     }
     /**
      * remove
      */
-    public function remove(/* ... */): mixed
+    public function remove(string $key): self
     {
         return $this;
     }
     /**
      * hierarchy
      */
-    public function hierarchy(/* ... */): mixed
+    public function hierarchy()
     {
         return null;
     }
     /**
      * syncFromModules
      */
-    public function syncFromModules(/* ... */): mixed
+    public function syncFromModules()
     {
-        return $this;
+        return null;
     }
 }
