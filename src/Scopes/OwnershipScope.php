@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\Rbac\Scopes;
 
-use Tavaan\Core\Contracts\Auth\Authenticatable;
-use Tavaan\Core\Contracts\Database\QueryBuilderInterface;
-use Tavaan\Core\Contracts\ORM\ModelInterface;
-use Tavaan\Core\Contracts\ORM\ScopeInterface;
+use Tavaan\Engine\Auth\Contracts\Authenticatable;
+use Tavaan\Engine\Database\Contracts\QueryBuilderInterface;
+use Tavaan\Engine\Database\ORM\Contracts\ModelInterface;
+use Tavaan\Engine\Database\ORM\Contracts\ScopeInterface;
 
 /**
  * تَوان | Tavaan — RBAC
@@ -32,12 +32,12 @@ final class OwnershipScope implements ScopeInterface
         ?\Closure $userResolver = null,
     ) {
         $this->userResolver = $userResolver ?? static function (): ?Authenticatable {
-            if (!\class_exists(\Tavaan\Core\Facade\Facades\Auth::class)) {
+            if (!\class_exists(\Tavaan\Engine\Auth\Facades\Auth::class)) {
                 return null;
             }
 
             try {
-                $user = \Tavaan\Core\Facade\Facades\Auth::user();
+                $user = \Tavaan\Engine\Auth\Facades\Auth::user();
 
                 return $user instanceof Authenticatable ? $user : null;
             } catch (\Throwable) {

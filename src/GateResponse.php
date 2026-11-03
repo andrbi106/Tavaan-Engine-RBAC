@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\Rbac;
 
-use Tavaan\Core\Contracts\Authorization\ResponseInterface;
+use Tavaan\Engine\Rbac\Contracts\ResponseInterface;
 
 /**
  * تَوان | Tavaan — RBAC

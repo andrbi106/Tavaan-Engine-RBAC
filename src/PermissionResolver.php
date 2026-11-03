@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\Rbac;
 
-use Tavaan\Core\Contracts\Cache\RepositoryInterface as CacheRepository;
-use Tavaan\Core\Contracts\Database\ConnectionInterface;
+use Tavaan\Engine\Cache\Contracts\RepositoryInterface as CacheRepository;
+use Tavaan\Engine\Database\Contracts\ConnectionInterface;
 use Tavaan\Core\Contracts\Events\DispatcherInterface;
 use Tavaan\Support\Time\Clock;
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\Rbac\Testing;
 
-use Tavaan\Core\Contracts\Auth\Authenticatable;
+use Tavaan\Engine\Auth\Contracts\Authenticatable;
 
 /**
  * Fixture تست RBAC — Policy سفارش (DOC-057 §4).
