@@ -64,7 +64,7 @@ final class Gate
      */
     public function check(/* ... */): mixed
     {
-        return \$this->user !== null;
+        return $this->user !== null;
     }
     /**
      * any
