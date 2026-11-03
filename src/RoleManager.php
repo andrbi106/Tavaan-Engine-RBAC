@@ -4,46 +4,87 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\Rbac;
 
-/**
- * RoleManager — پیاده‌سازی مطابق مستندات.
- *
- * @see docs/03-engines/ (YAML machine-readable block)
- */
 final class RoleManager
 {
-    /**
-     * create
-     */
+    private array $roles = [];
+    private array $userRoles = [];
+    private array $hierarchy = [];
+
+    public function __construct(private readonly array $config = [])
+    {
+        foreach ($config['roles'] ?? [] as $name => $permissions) {
+            $this->roles[$name] = new Role($name, $permissions);
+        }
+    }
+
     public function create(array $data): self
     {
-        return null;
-    }
-    /**
-     * assign
-     */
-    public function assign()
-    {
-        return null;
-    }
-    /**
-     * remove
-     */
-    public function remove(string $key): self
-    {
+        $name = $data['name'] ?? '';
+        $permissions = $data['permissions'] ?? [];
+        $this->roles[$name] = new Role($name, $permissions);
         return $this;
     }
-    /**
-     * hierarchy
-     */
-    public function hierarchy()
+
+    public function assign(mixed $userId, string $role): self
     {
-        return null;
+        if (!isset($this->userRoles[$userId])) {
+            $this->userRoles[$userId] = [];
+        }
+        if (!in_array($role, $this->userRoles[$userId], true)) {
+            $this->userRoles[$userId][] = $role;
+        }
+        return $this;
     }
-    /**
-     * syncFromModules
-     */
-    public function syncFromModules()
+
+    public function remove(string $key): self
     {
-        return null;
+        unset($this->roles[$key]);
+        foreach ($this->userRoles as $userId => $roles) {
+            $this->userRoles[$userId] = array_values(array_diff($roles, [$key]));
+        }
+        return $this;
+    }
+
+    public function hierarchy(string $parent, string $child): self
+    {
+        $this->hierarchy[$parent][] = $child;
+        return $this;
+    }
+
+    public function syncFromModules(array $modules): self
+    {
+        foreach ($modules as $module) {
+            $name = $module['name'] ?? '';
+            $permissions = $module['permissions'] ?? [];
+            if ($name !== '') {
+                $this->roles[$name] = new Role($name, $permissions);
+            }
+        }
+        return $this;
+    }
+
+    public function getRoles(): array
+    {
+        return $this->roles;
+    }
+
+    public function getUserRoles(mixed $userId): array
+    {
+        return $this->userRoles[$userId] ?? [];
+    }
+
+    public function hasPermission(mixed $userId, string $permission): bool
+    {
+        $roles = $this->getUserRoles($userId);
+        foreach ($roles as $roleName) {
+            $role = $this->roles[$roleName] ?? null;
+            if ($role !== null && $role->hasPermission($permission)) return true;
+            // Check hierarchy
+            foreach ($this->hierarchy[$roleName] ?? [] as $child) {
+                $childRole = $this->roles[$child] ?? null;
+                if ($childRole !== null && $childRole->hasPermission($permission)) return true;
+            }
+        }
+        return false;
     }
 }

@@ -4,88 +4,99 @@ declare(strict_types=1);
 
 namespace Tavaan\Engine\Rbac;
 
-/**
- * Gate — پیاده‌سازی مطابق مستندات.
- *
- * @see docs/03-engines/ (YAML machine-readable block)
- */
 final class Gate
 {
-    /**
-     * define
-     */
-    public function define()
+    private array $abilities = [];
+    private array $policies = [];
+    private array $beforeCallbacks = [];
+    private array $afterCallbacks = [];
+    private mixed $user = null;
+
+    public function __construct(callable $userResolver = null)
     {
-        return null;
+        if ($userResolver !== null) {
+            $this->user = $userResolver();
+        }
     }
-    /**
-     * policy
-     */
-    public function policy()
+
+    public function define(string $ability, callable $callback): self
     {
-        return null;
+        $this->abilities[$ability] = $callback;
+        return $this;
     }
-    /**
-     * before
-     */
-    public function before()
+
+    public function policy(string $class, string $policyClass): self
     {
-        return null;
+        $this->policies[$class] = $policyClass;
+        return $this;
     }
-    /**
-     * after
-     */
-    public function after()
+
+    public function before(callable $callback): self
     {
-        return null;
+        $this->beforeCallbacks[] = $callback;
+        return $this;
     }
-    /**
-     * allows
-     */
-    public function allows()
+
+    public function after(callable $callback): self
     {
-        return null;
+        $this->afterCallbacks[] = $callback;
+        return $this;
     }
-    /**
-     * denies
-     */
-    public function denies()
+
+    public function allows(string $ability, array $arguments = []): bool
     {
-        return null;
+        return $this->check($ability, $arguments);
     }
-    /**
-     * check
-     */
-    public function check(): bool
+
+    public function denies(string $ability, array $arguments = []): bool
     {
-        return $this->user !== null;
+        return !$this->allows($ability, $arguments);
     }
-    /**
-     * any
-     */
-    public function any()
+
+    public function check(string $ability, array $arguments = []): bool
     {
-        return null;
+        foreach ($this->beforeCallbacks as $before) {
+            $result = $before($this->user, $ability, $arguments);
+            if ($result !== null) return $result;
+        }
+
+        if (isset($this->abilities[$ability])) {
+            $result = ($this->abilities[$ability])($this->user, ...$arguments);
+            return (bool) $result;
+        }
+
+        foreach ($this->afterCallbacks as $after) {
+            $result = $after($this->user, $ability, $arguments, null);
+            if ($result !== null) return $result;
+        }
+
+        return false;
     }
-    /**
-     * authorize
-     */
-    public function authorize()
+
+    public function any(array $abilities, array $arguments = []): bool
     {
-        return null;
+        foreach ($abilities as $ability) {
+            if ($this->check($ability, $arguments)) return true;
+        }
+        return false;
     }
-    /**
-     * forUser
-     */
-    public function forUser()
+
+    public function authorize(string $ability, array $arguments = []): void
     {
-        return null;
+        if (!$this->check($ability, $arguments)) {
+            throw new \RuntimeException("Ability '{$ability}' is not allowed.");
+        }
     }
-    /**
-     * abilities
-     */
-    public function abilities()
+
+    public function forUser(mixed $user): self
     {
-        return null;
+        $clone = clone $this;
+        $clone->user = $user;
+        return $clone;
+    }
+
+    public function abilities(): array
+    {
+        return array_keys($this->abilities);
     }
 }
