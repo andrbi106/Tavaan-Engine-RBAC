@@ -64,8 +64,7 @@ final class Gate
      */
     public function check(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
-        return null;
+        return \$this->user !== null;
     }
     /**
      * any
