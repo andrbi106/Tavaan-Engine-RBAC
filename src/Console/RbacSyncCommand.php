@@ -9,7 +9,7 @@ use Tavaan\Core\Contracts\Console\CommandInterface;
 /**
  * rbac:sync command.
  */
-final class Rbac_syncCommand implements CommandInterface
+final class RbacSyncCommand implements CommandInterface
 {
     public function name(): string
     {
