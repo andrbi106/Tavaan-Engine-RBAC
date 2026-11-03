@@ -16,31 +16,27 @@ final class RoleManager
      */
     public function create(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
-        return null;
+        return $this;
     }
     /**
      * assign
      */
     public function assign(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
-        return null;
+        return $this;
     }
     /**
      * remove
      */
     public function remove(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
-        return null;
+        return $this;
     }
     /**
      * hierarchy
      */
     public function hierarchy(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
         return null;
     }
     /**
@@ -48,7 +44,6 @@ final class RoleManager
      */
     public function syncFromModules(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
-        return null;
+        return $this;
     }
 }

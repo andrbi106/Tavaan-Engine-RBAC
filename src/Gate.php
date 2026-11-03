@@ -16,7 +16,6 @@ final class Gate
      */
     public function define(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
         return null;
     }
     /**
@@ -24,7 +23,6 @@ final class Gate
      */
     public function policy(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
         return null;
     }
     /**
@@ -32,7 +30,6 @@ final class Gate
      */
     public function before(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
         return null;
     }
     /**
@@ -40,7 +37,6 @@ final class Gate
      */
     public function after(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
         return null;
     }
     /**
@@ -48,15 +44,13 @@ final class Gate
      */
     public function allows(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
-        return null;
+        return [];
     }
     /**
      * denies
      */
     public function denies(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
         return null;
     }
     /**
@@ -71,7 +65,6 @@ final class Gate
      */
     public function any(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
         return null;
     }
     /**
@@ -79,7 +72,6 @@ final class Gate
      */
     public function authorize(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
         return null;
     }
     /**
@@ -87,7 +79,6 @@ final class Gate
      */
     public function forUser(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
         return null;
     }
     /**
@@ -95,7 +86,6 @@ final class Gate
      */
     public function abilities(/* ... */): mixed
     {
-        // TODO: Implement per docs §3 API.
         return null;
     }
 }
