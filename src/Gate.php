@@ -12,7 +12,7 @@ final class Gate
     private array $afterCallbacks = [];
     private mixed $user = null;
 
-    public function __construct(callable $userResolver = null)
+    public function __construct(?callable $userResolver = null)
     {
         if ($userResolver !== null) {
             $this->user = $userResolver();
