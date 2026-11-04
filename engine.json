@@ -42,5 +42,6 @@
     "accessor": "gate"
   },
   "docs": "docs/03-engines/rbac.md",
-  "notes": "M4 — RBAC+ABAC با Gate/Policy، سلسله‌مراتب نقش، wildcard، delegation موقت، Row-Level Scope، sync از manifest ماژول‌ها."
+  "notes": "M4 — RBAC+ABAC با Gate/Policy، سلسله‌مراتب نقش، wildcard، delegation موقت، Row-Level Scope، sync از manifest ماژول‌ها.",
+  "class": "Tavaan\\Engine\\Rbac\\RBACEngine"
 }

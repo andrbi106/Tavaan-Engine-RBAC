@@ -2,6 +2,8 @@
 
 > **نقش و کنترل دسترسی** — موتور RBAC در فریمورک تَوان
 
+این موتور از کلاس پایهٔ `Engine` (در [Tavaan-Engine-Core](https://github.com/andrbi106/Tavaan-Engine-Core)) ارث می‌برد.
+
 ## مشخصات
 
 | فیلد | مقدار |
@@ -11,56 +13,50 @@
 | عنوان فارسی | نقش و کنترل دسترسی |
 | نسخه | `0.1.0` |
 | namespace | `Tavaan\Engine\Rbac` |
-| نوع | `engine` |
-| Facade | `Gate` (accessor: `gate`) |
+| کلاس موتور | `Tavaan\Engine\Rbac\RBACEngine` |
+| Facade | Gate (`gate`) |
+
+## کلاس موتور
+
+```php
+namespace Tavaan\Engine\Rbac;
+
+use Tavaan\EngineCore\Engine as BaseEngine;
+use Tavaan\EngineCore\Contracts\EngineManifestInterface;
+
+final class RBACEngine extends BaseEngine
+{
+    public function __construct(EngineManifestInterface $manifest)
+    {
+        parent::__construct($manifest);
+    }
+
+    public function register(ContainerInterface $container): void
+    {
+        parent::register($container);
+        // bindingهای اختصاصی موتور
+    }
+
+    public function boot(): void
+    {
+        parent::boot();
+    }
+}
+```
+
+**فایل:** `src/RBACEngine.php`
 
 ## توضیحات
 
 M4 — RBAC+ABAC با Gate/Policy، سلسله‌مراتب نقش، wildcard، delegation موقت، Row-Level Scope، sync از manifest ماژول‌ها.
 
-## قراردادها (Contracts)
+## وابستگی‌ها
 
-این موتور قراردادهای زیر را ارائه می‌دهد:
-
-- `Tavaan\Engine\Rbac\Contracts\GateInterface`
-- `Tavaan\Engine\Rbac\Contracts\ResponseInterface`
-
-## خطاها (Exceptions)
-
-- `Tavaan\Engine\Rbac\Exceptions\AuthorizationException`
-
-## Facadeها
-
-- `Tavaan\Engine\Rbac\Facades\Gate`
-
-## کلاس‌های اصلی
-
-- `src/Concerns/HasRoles.php`
-- `src/Console/RbacSyncCommand.php`
-- `src/Gate.php`
-- `src/GateResponse.php`
-- `src/PermissionResolver.php`
-- `src/PermissionSync.php`
-- `src/RoleManager.php`
-- `src/Scopes/OwnershipScope.php`
-- `src/Testing/OrderFixture.php`
-- `src/Testing/OrderPolicyFixture.php`
-- `src/Testing/RbacTestUser.php`
-- `src/rbac.php`
+**موتورهای مورد‌نیاز:** `auth`, `database`, `cache`, `event`, `config`
 
 ## Service Providerها
 
 - `Tavaan\Engine\Rbac\GateServiceProvider`
-
-## وابستگی‌ها
-
-**موتورهای مورد‌نیاز:**
-
-- `auth`
-- `database`
-- `cache`
-- `event`
-- `config`
 
 ## جداول دیتابیس
 
@@ -74,28 +70,19 @@ M4 — RBAC+ABAC با Gate/Policy، سلسله‌مراتب نقش، wildcard، 
 
 - `rbac:sync`
 
-## پیکربندی
+## سه درگاه ارتباط با سایر موتورها
 
-- فایل پیکربندی: `config/rbac.php`
-- کلید: `rbac`
+| درگاه | الگو | متدهای convenience |
+|---|---|---|
+| Container | pull-based DI | `make()`, `bound()` |
+| Events | pub/sub | `dispatch()`, `listen()` |
+| EngineBus | point-to-point RPC | `call()`, `offer()` |
 
 ## نصب
 
 ```bash
 git clone https://github.com/andrbi106/Tavaan-Engine-RBAC.git
 ```
-
-این موتور بخشی از فریمورک تَوان است و معمولاً به‌صورت مستقیم نصب نمی‌شود،
-بلکه توسط [Tavaan-Core](https://github.com/andrbi106/Tavaan-Core) مدیریت می‌شود.
-
-## روابط با سایر مخازن
-
-| مخزن | نقش |
-|---|---|
-| **`andrbi106/Tavaan-Engine-RBAC`** (این مخزن) | موتور RBAC |
-| `andrbi106/Tavaan-Engine-Core` | ساختار پایه + درگاه ارتباط موتورها |
-| `andrbi106/Tavaan-Core` | اسکلت اپلیکیشن + همهٔ موتورها |
-| `Derogaramin/Tavaan-Framework` | فریمورک مادر (monorepo) |
 
 ## مجوز
 
